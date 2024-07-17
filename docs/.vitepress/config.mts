@@ -27,11 +27,11 @@ export default defineConfig({
                 collapsed: true,
                 items: kits()
             },
-            // {
-            //     text: '编程指南',
-            //     collapsed: true,
-            //     items: programmingGuide()
-            // },
+            {
+                text: '编程指南',
+                collapsed: true,
+                items: programmingGuide()
+            },
             {
                 text: '视频资源',
                 collapsed: true,
@@ -43,7 +43,8 @@ export default defineConfig({
             {icon: 'github', link: 'https://github.com/vuejs/vitepress'}
         ],
         outline: {
-            label: '页面导航'
+            label: '页面导航',
+            level:[2,3]
         },
         langMenuLabel: '多语言',
         returnToTopLabel: '回到顶部',
