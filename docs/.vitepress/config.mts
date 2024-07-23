@@ -76,6 +76,7 @@ function programmingGuide(){
         {
             text: 'Leight', collapsed: true, items: [
                 {text: 'Leight 代码编程指南', link: '/programmingGuide/Leight/code.md'},
+                {text: 'Leight 可视化编程指南', link: '/programmingGuide/Leight/blockly.md'},
             ]
         },
     ]

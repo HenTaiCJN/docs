@@ -224,9 +224,9 @@ wifi.connect(ssid='leihoo',psd='lh123456')
 mqttclient.connect(server='cloud.leihoorobot.com',port=1883,client_id='zmoakjdq',user='admin',psd='123456')
 mqttStatus=mqttclient.connected()
 if mqttStatus:
-    print(mqtt已连接)
+    print('mqtt已连接')
 else:
-    print(mqtt未连接)
+    print('mqtt未连接')
 ```
 
 
@@ -308,3 +308,392 @@ def receivedfunction():
 mqttclient.connect(server='cloud.leihoorobot.com',port=1883,client_id='zmoakjdq',user='admin',psd='123456')
 mqttclient.received(topic='JTZYU1721202028',callback=receivedfunction)
 ```
+
+
+
+### 传感器-声音传感器
+```py
+from leight import sound
+sd=sound()          # 初始化
+sd_value=sd.read()  # 读取值
+```
+
+[//]: # (1. 这段代码用于读取声音传感器的值,并且有板载设备,外部接入时需在初始化的括号内填入引脚号)
+
+[//]: # (2. 使用板载设备时,读取的是声音强度&#40;0-4095&#41;;引脚接入的声音传感器为有无声音&#40;0或1&#41;)
+1. 这段代码用于读取声音传感器的值,用于检测台灯周围的声音
+2. 读取的数值为0或1,表示有无声音
+
+
+### 传感器-光线传感器
+```py
+from leight import ldr
+l=ldr()             # 初始化
+l_value=l.read()    # 读取值
+```
+
+[//]: # (1. 这段代码用于读取光线传感器的值,并且有板载设备,外部接入时需在初始化的括号内填入引脚号)
+
+[//]: # (2. 无论板载还是外部,读取的都是光线强度&#40;0-4095&#41;;)
+
+1. 这段代码用于读取光线传感器的值,用于检测台灯周围的环境亮度
+2. 值为光线强度,值的范围在0-4095
+
+
+
+### 传感器-霍尔传感器
+```py
+from leight import hall
+hl=hall()       # 初始化
+v=hl.read()     # 读取值 
+```
+1. 这段代码用于读取霍尔传感器的值,用于检测台灯是否吸附在灯座上
+2. 读取的数值为0或1,1表示吸上灯座
+
+
+
+### 传感器-人体雷达
+```py
+from leight import radar
+rd=radar()          # 初始化
+rd_value=hl.read()  # 读取值
+```
+1. 这段代码用于读取人体雷达的值,用于检测台灯周围是否有人
+2. 读取的数值为0或1,1表示周围是有人
+3. 人体雷达较为灵敏,一般需要人走出房间关上门才不会被检测到
+
+
+
+### 传感器-灯光
+```py
+from leight import led
+
+lightness=led.get_lightness()
+```
+1. 这段代码用于读取台灯当前的亮度
+2. 读取的数值范围在0-100
+
+
+
+### 传感器-按键
+```py
+from button_action import touch
+
+def mybtn:
+	'''编写自定义按钮功能'''
+touch.action_change('touch1_click',mybtn) # 自定义A键单击
+```
+1. 这段代码用于自定义台灯按键的功能
+2. 第一个参数代表按键类型,第二个参数代表该按键类型触发后要执行的函数名
+3. 程序运行后,新定义的按键事件会覆盖默认的事件,没有新定义的会保持默认事件
+4. 按键类型见下表
+
+| 类型     | 参数               |
+|--------|------------------|
+| A键单击   | touch1_click     |
+| A键双击   | touch1_dclick    |
+| A键长按   | touch1_longClick |
+| B键单击   | touch2_click     |
+| B键双击   | touch2_dclick    |
+| B键长按   | touch2_longClick |
+| A键滑到B键 | touch1_to_touch2 |
+| B键滑到A键 | touch2_to_touch1 |
+* 示例
+```py
+from button_action import touch
+
+def mybtn:
+    print('A按键长按')
+def mybtn2:
+    print('B按键双击')
+touch.action_change('touch1_longClick',mybtn)
+touch.action_change('touch2_dclick',mybtn2)
+```
+
+
+
+### 传感器-语音
+```py
+from leight import voice
+
+def voice_01_bind():
+	'''自定义语音功能'''
+voice.bind('01',voice_01_bind) # 绑定‘开灯’语音指令的函数
+```
+1. 这段代码用于自定义语音指令
+2. 第一个参数代表语音类型,第二个参数代表该语音触发后要执行的函数名
+3. 程序运行后,新定义的语音事件会覆盖默认的事件,没有新定义的会保持默认事件
+4. 按键类型见下表
+
+| 类型 | 语音指令  |
+|----|-------|
+| 00 | 关灯    |
+| 01 | 开灯    |
+| 02 | 调亮    |
+| 03 | 调暗    |
+| 04 | 嘛咪嘛咪哄 |
+| 05 | 急急如律令 |
+| 06 | 巴拉巴拉  |
+| 07 | 玛卡巴卡  |
+* 示例
+```py
+from button_action import touch
+
+def mybtn:
+    print('A按键长按')
+def mybtn2:
+    print('B按键双击')
+touch.action_change('touch1_longClick',mybtn)
+touch.action_change('touch2_dclick',mybtn2)
+```
+
+
+
+### 执行器-蜂鸣器
+```py
+from leight import speaker
+speaker.tone(freq=[1000,1500],dual=1000)
+```
+1. 这段代码用于使用蜂鸣器
+2. freq参数为列表,代表声音频率
+3. dual代表声音持续时间,单位为毫秒
+4. 这段代码是阻塞的
+
+
+
+### 执行器-RGB灯带
+```py
+from leight import rgb
+
+rgb.write(index=[0,1,2],r=255,g=0,b=0)
+```
+1. 这段代码用于改变rgb灯的颜色
+2. index参数为列表,列表内填入rgb灯的序号
+3. r,g,b这三个参数来控制颜色,范围0到255
+
+* 示例
+```py
+from leight import rgb
+import time
+rgb.write(index=[0,1,2],r=255,g=0,b=0)  # 设置0,1,2号rgb灯为红色
+time.sleep(1)                           # 休眠一秒
+rgb.write(index=[1,2],r=0,g=0,b=255)    # 单独设置1,2号rgb灯为蓝色
+time.sleep(1)                           # 休眠一秒
+rgb.write(index=[0],r=0,g=0,b=0)        # 单独关闭0号rgb灯
+rgb.write(index=[1],r=0,g=255,b=0)      # 单独设置1号rgb灯为绿色
+
+```
+
+
+
+### 执行器-台灯-开/关灯
+```py
+from leight import led
+led.on()
+led.off()
+```
+1. 这段代码中,led.on()用于开灯,led.off()用于关灯
+2. 开关灯自带动画,同时也具有清屏效果(灯珠全亮).
+
+
+
+### 执行器-投射字符-单个字符
+```py
+from leight import char
+char.display('a')
+```
+1. 这段代码用于投射单个字符(大小写英文字母和数字)
+* 示例
+```py
+from leight import char
+import time
+char.display('L')
+time.sleep(0.5)     # 休眠一秒
+char.display('O')
+time.sleep(0.5)     # 休眠一秒
+char.display('V')
+time.sleep(0.5)     # 休眠一秒
+char.display('E')
+# 整体效果:将LOVE四个字母投射,间隔0.5秒
+```
+
+
+
+### 执行器-投射字符-走马灯
+```py
+from leight import carousel
+crl=carousel()         # 初始化走马灯
+crl.loop('WELCOME',10) # 投射WELCOME，速度为10
+crl.stop()             # 停止走马灯
+
+```
+1. 这段代码用于投射走马灯
+2. 投射之后会一直循环播放,直到使用停止函数
+3. 跑马灯是非阻塞的
+* 示例
+```py
+from leight import carousel,char
+import time
+crl=carousel()         # 初始化走马灯
+crl.loop('WELCOME',10) # 投射WELCOME，速度为10
+time.sleep(10)         # 休眠十秒
+crl.stop()             # 停止走马灯
+char.display('A')      # 投射字符A
+```
+
+
+
+### 广播-初始化
+```py
+from leight import radio
+r=radio()
+
+```
+1. 这段代码用于初始化广播模块,需要在括号内填入数字识别码
+2. 识别码由自己定义,发送端和接收端的识别码相同时才能收发消息
+3. 设备无法既发送又接收,只能选择其一
+* 示例
+```py
+from leight import radio
+r=radio(123)
+```
+
+
+
+### 广播-启动/关闭
+```py
+from leight import radio
+r.on()
+
+r.off()
+```
+1. 这两段代码用于开启和关闭radio
+2. 一般情况下,初始化radio时会自动启动,不需要手动开启
+
+
+
+### 广播-发送消息
+```py
+from leight import radio
+
+r.send('hello world')
+```
+1. 这段代码用于广播消息
+2. 发送前需要初始化,并且发送端不会接收自己广播的消息
+
+
+
+### 广播-接收消息
+```py
+from leight import radio
+
+msg=r.recv()
+```
+1. 这段代码用于接收广播的消息
+2. 发送前需要初始化,并且发送端不会接收自己广播的消息
+3. 接收消息的函数只会接收最新的消息,否则返回None.为了避免资源浪费,建议搭配监听消息的函数使用
+
+
+
+### 广播-监听消息
+```py
+from leight import radio
+
+def radio_callback():
+	'''编写收到消息后做什么'''
+
+r.setcb(radio_callback)
+```
+1. 这段代码用于监听广播是否接收到新消息
+2. 在setcb的括号中填入收到新消息后要执行的函数名
+
+* 示例
+```py
+from leight import radio
+
+def radio_callback():
+	'''编写收到消息后做什么'''
+	msg=r.recv()            # 读取消息并赋值给变量msg
+	print(msg)              # 打印msg
+r=radio(123)
+r.setcb(radio_callback)     # 设置radio_callback为收到消息后要执行的函数
+```
+
+
+
+### 时间-同步时间
+```py
+import RTC
+import ntptime
+
+'''开始同步时间(须开启wifi)'''
+ntptime.host='cn.pool.ntp.org'
+ntptime.settime()
+(year, month, day, weekday, hours, minutes, seconds, subseconds) = RTC().datetime()
+RTC().datetime((year, month, day, weekday, hours+8, minutes, seconds, subseconds))
+'''同步时间结束'''
+```
+1. 这段代码用于与服务器同步当前时间
+2. 同步之前需要先连接wifi,如果网络质量不好,可能会导致同步失败,失败的话可以多次尝试
+3. 同步的时间为+8时区
+
+
+
+### 时间-当前时间
+```py
+import time
+now_time=f'{time.localtime()[0]}年{time.localtime()[1]}月{time.localtime()[2]}日 {time.localtime()[3]}:{time.localtime()[4]}:{time.localtime()[5]}'
+```
+1. 这段代码用于获取设备中的时钟并格式化赋值给now_time
+2. time.localtime()所获的是一个包含当前时间信息的列表.这段当前时间模块拖放后是已经处理好的代码
+
+
+
+### 时间-当前时间
+```py
+import time
+import _thread
+def alarm_callback(h,m):
+	while True:
+		if time.localtime()[3] == h and time.localtime()[4] == m:
+			'''到时间后做什么'''
+			break # 做完后解除闹钟
+		time.sleep(1)
+_thread.start_new_thread(alarm_callback, [15, 2]) #设置15点02分时的闹钟
+```
+1. 这段代码用于设置定时闹钟
+2. _thread.start_new_thread中第二个参数为列表,列表的第一和第二个元素分别代表几时几分.
+3. 设置闹钟前建议先同步时间
+
+
+
+### 时间-定时器
+```py
+from machine import Timer
+
+def Timer_callback(e):
+	'''定时循环做什么'''
+Timer(3).init(period=1000,mode=Timer.PERIODIC,callback=Timer_callback) # 每1000毫秒执行一次Timer_callback
+```
+1. 这段代码用于设置定时器以固定时间间隔执行代码
+2. 将想要重复执行的代码写入Timer_callback函数中
+3. period为定时器的时间间隔设置,单位是毫秒
+4. 可使用的定时器有三个,Timer(1),Timer(2),Timer(3)
+5. 一个定时器只能设置一个callback,新的定义会覆盖旧的
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
