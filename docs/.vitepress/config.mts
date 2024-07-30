@@ -27,11 +27,11 @@ export default defineConfig({
                 collapsed: true,
                 items: kits()
             },
-            // {
-            //     text: '编程指南',
-            //     collapsed: true,
-            //     items: programmingGuide()
-            // },
+            {
+                text: '编程指南',
+                collapsed: true,
+                items: programmingGuide()
+            },
             {
                 text: '视频资源',
                 collapsed: true,
@@ -43,7 +43,8 @@ export default defineConfig({
             {icon: 'github', link: 'https://github.com/vuejs/vitepress'}
         ],
         outline: {
-            label: '页面导航'
+            label: '页面导航',
+            level:[2,3]
         },
         langMenuLabel: '多语言',
         returnToTopLabel: '回到顶部',
@@ -55,6 +56,12 @@ export default defineConfig({
             prev: '上一页',
             next: '下一页'
         },
+    },
+    markdown: {
+        image: {
+            // 默认禁用图片懒加载
+            lazyLoading: true
+        }
     }
 })
 
@@ -75,6 +82,7 @@ function programmingGuide(){
         {
             text: 'Leight', collapsed: true, items: [
                 {text: 'Leight 代码编程指南', link: '/programmingGuide/Leight/code.md'},
+                {text: 'Leight 可视化编程指南', link: '/programmingGuide/Leight/blockly.md'},
             ]
         },
     ]

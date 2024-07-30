@@ -33,9 +33,14 @@ Leight主控制器基于ESP32开发
 ::: tip
 通过 LeLink 在线编程工具，无需下载软件，打开PC浏览器输入以下网址即可开启物联网之旅：
 
-https://lelink.leihoorobot.com/leight/
+https://lelink.leihoorobot.com/leight/  
+(推荐使用chrome浏览器)  
 
-(推荐使用chrome浏览器)
+可视化编程指南:  [点击前往](/programmingGuide/Leight/blockly.md)
+
+ 
+代码编程指南:  [点击前往](/programmingGuide/Leight/code.md)
+
 :::
 ## 产品本体
 <div style="display: grid;grid-template-columns: auto auto;gap: 10px;">
