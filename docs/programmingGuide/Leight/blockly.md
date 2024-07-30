@@ -48,7 +48,8 @@
 1. 该积木用于进行或/与判断
 2. 并且:两边都为`True`时该积木整体为`True`,否则为`False`
 3. 或:有一边为`True`时该积木整体为`True`,当两边都为`False`时整体为`False`
-4. 或/与逻辑要与'逻辑门'区分,'False 并且 False'的结果是False而不是True
+4. 或/与逻辑要与'逻辑门'区分,'False 并且 False'的结果是False而不是True  
+
 [//]: # (4. <p style="color: red;">或/与逻辑要与'逻辑门'区分,'False 并且 False'的结果是False而不是True</p>)  
 
 
